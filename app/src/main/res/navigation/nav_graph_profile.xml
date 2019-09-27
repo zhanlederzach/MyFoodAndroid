@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_profile"
+    app:startDestination="@id/profile_dest">
+
+    <fragment
+        android:id="@+id/profile_dest"
+        android:name="kz.myfood.ui.profile.ProfileFragment"
+        android:label="Profile">
+        <action
+            android:id="@+id/action_profile_statistics"
+            app:destination="@id/profile_statistics" />
+        <action
+            android:id="@+id/action_about_app"
+            app:destination="@id/profile_about_app" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_about_app"
+        android:name="kz.myfood.ui.profile.statisctics.about_app.AboutAppFragment"
+        android:label="Profile About App">
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_statistics"
+        android:name="kz.myfood.ui.profile.statisctics.StatiscticFragment"
+        android:label="Profile Statistics">
+
+        <action
+            android:id="@+id/action_details_statistic"
+            app:destination="@+id/profile_details_statistic"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/profile_details_statistic"
+        android:name="kz.myfood.ui.profile.statisctics.statistic_detail.StatisticDetailsFragment"
+        android:label="Profile Statistics Details">
+    </fragment>
+
+</navigation>
