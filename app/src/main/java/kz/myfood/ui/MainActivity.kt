@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(),
         bottomNav.setOnNavigationItemReselectedListener(this)
 
         // initialize backStack with elements
-//        if (backStack.empty()) backStack.push(0)
+        if (backStack.empty()) backStack.push(0)
     }
 
     /// BottomNavigationView ItemSelected Implementation

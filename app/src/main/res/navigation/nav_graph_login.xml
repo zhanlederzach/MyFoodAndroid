@@ -27,7 +27,7 @@
             android:id="@+id/action_signInFragment_to_usersFragment"
             app:destination="@id/home_dest"
             app:launchSingleTop="true"
-            app:popUpTo="@+id/nav_login"
+            app:popUpTo="@+id/nav_home"
             app:popUpToInclusive="true" />
 
     </fragment>
