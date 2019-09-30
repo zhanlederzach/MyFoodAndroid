@@ -63,6 +63,7 @@ dependencies {
     // navigation extensions
     implementation "androidx.navigation:navigation-ui-ktx:2.1.0"
     implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05"
+    implementation 'androidx.navigation:navigation-ui:1.0.0-alpha02'
 
     //koin
     implementation 'org.koin:koin-android:2.0.1'

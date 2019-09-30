@@ -1,113 +1,43 @@
 package kz.myfood.ui
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kz.myfood.R
+import kz.myfood.repositories.LocalStorageImpl
+import kz.myfood.repositories.LocalStorageImpl.Companion.IS_REGISTERED
 import kz.myfood.utils.views.BaseFragment
-import java.util.*
+import androidx.navigation.NavOptions
 
-class MainActivity : AppCompatActivity(),
-    ViewPager.OnPageChangeListener,
-    BottomNavigationView.OnNavigationItemReselectedListener,
-    BottomNavigationView.OnNavigationItemSelectedListener {
 
-    // overall back stack of containers
-    private val backStack = Stack<Int>()
+class MainActivity : AppCompatActivity() {
 
-    // list of base destination containers
-    private val fragments = listOf(
-        BaseFragment.newInstance(R.layout.content_home_base, R.id.toolbar_home, R.id.nav_host_home),
-        BaseFragment.newInstance(R.layout.content_news_base, R.id.toolbar_news, R.id.nav_host_news),
-        BaseFragment.newInstance(R.layout.content_profile_base, R.id.toolbar_profile, R.id.nav_host_profile)
-    )
+    private var navController: NavController? = null
+    private var isRegistered = true
 
-    // map of navigation_id to container index
-    private val indexToPage = mapOf(0 to R.id.home, 1 to R.id.news, 2 to R.id.profile)
-
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
-        val fragment = BaseFragment.newInstance(R.layout.content_login_base, R.id.nav_host_login)
-        setViewPager()
-    }
-
-    private fun setViewPager() {
-        // setup main view pager
-        mainPager.addOnPageChangeListener(this)
-        mainPager.adapter = ViewPagerAdapter()
-        mainPager.post(this::checkDeepLink)
-        mainPager.offscreenPageLimit = fragments.size
-
-        // set bottom nav
-        bottomNav.setOnNavigationItemSelectedListener(this)
-        bottomNav.setOnNavigationItemReselectedListener(this)
-
-        // initialize backStack with elements
-        if (backStack.empty()) backStack.push(0)
-    }
-
-    /// BottomNavigationView ItemSelected Implementation
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val position = indexToPage.values.indexOf(item.itemId)
-        if (mainPager.currentItem != position) setItem(position)
-        return true
-    }
-
-    override fun onNavigationItemReselected(item: MenuItem) {
-        val position = indexToPage.values.indexOf(item.itemId)
-        val fragment = fragments[position]
-        fragment.popToRoot()
-    }
-
-    override fun onBackPressed() {
-        val fragment = fragments[mainPager.currentItem]
-        val hadNestedFragments = fragment.onBackPressed()
-        // if no fragments were popped
-        if (!hadNestedFragments) {
-            if (backStack.size > 1) {
-                // remove current position from stack
-                backStack.pop()
-                // set the next item in stack as current
-                mainPager.currentItem = backStack.peek()
-
-            } else super.onBackPressed()
+        if(isRegistered){
+            supportFragmentManager.beginTransaction()
+                .add(R.id.nav_host_fragment, MainHostFragment())
+                .commit()
+        }else{
+            val myNavHostFragment: NavHostFragment = nav_host_fragment as NavHostFragment
+            val inflater = myNavHostFragment.navController.navInflater
+            val graph = inflater.inflate(R.navigation.main_graph)
+            myNavHostFragment.navController.graph = graph
         }
+
+//        val fragment = BaseFragment.newInstance(R.layout.content_login_base, R.id.nav_host_login)
     }
 
-    /// OnPageSelected Listener Implementation
-    override fun onPageScrollStateChanged(state: Int) {}
-
-    override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
-
-    override fun onPageSelected(page: Int) {
-        val itemId = indexToPage[page] ?: R.id.home
-        if (bottomNav.selectedItemId != itemId) bottomNav.selectedItemId = itemId
-    }
-
-    private fun setItem(position: Int) {
-        mainPager.currentItem = position
-        backStack.push(position)
-    }
-
-    private fun checkDeepLink() {
-        fragments.forEachIndexed { index, fragment ->
-            val hasDeepLink = fragment.handleDeepLink(intent)
-            if (hasDeepLink) setItem(index)
-        }
-    }
-
-    inner class ViewPagerAdapter : FragmentPagerAdapter(supportFragmentManager) {
-
-        override fun getItem(position: Int): Fragment = fragments[position]
-
-        override fun getCount(): Int = fragments.size
-
-    }
 }
