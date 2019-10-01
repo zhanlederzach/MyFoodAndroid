@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kz.myfood.R
 import kz.myfood.model.Constants.PROFILE_STATISCTIC
 import kz.myfood.model.ProfileInfo
+import kz.myfood.ui.login.AuthViewModel
 import org.koin.android.ext.android.inject
 
 /**
@@ -20,12 +22,15 @@ import org.koin.android.ext.android.inject
 
 class ProfileFragment : Fragment() {
 
+    private lateinit var btnLogout: Button
     private lateinit var tvNameProfile: TextView
     private lateinit var btnStatisctic: TextView
     private lateinit var btnAboutApp: TextView
 
-    private val viewModel: ProfileViewModel by inject()
     private var profile: ProfileInfo? = null
+
+    private val authViewModel: AuthViewModel by inject()
+    private val viewModel: ProfileViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +49,14 @@ class ProfileFragment : Fragment() {
         tvNameProfile = view.findViewById(R.id.tvNameProfile)
         btnStatisctic = view.findViewById(R.id.btnStatisctic)
         btnAboutApp = view.findViewById(R.id.btnAboutApp)
+
+        btnLogout = view.findViewById(R.id.btnLogout)
+
+        btnLogout.setOnClickListener {
+            authViewModel.unregisterUser()
+            activity?.finish()
+            findNavController().navigate(R.id.logout)
+        }
 
         btnStatisctic.setOnClickListener {
             val bundle = Bundle().apply {

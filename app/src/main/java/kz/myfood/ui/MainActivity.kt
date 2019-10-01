@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setData() {
-        Log.d("MainActivity", "setData: ");
         viewModel.checkForAuth()
         viewModel.liveData.observe(this, Observer { result ->
             when(result){
@@ -48,7 +47,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Log.d("MainActivity", "onBackPressed: ")
         val hostFragment = supportFragmentManager.findFragmentByTag(MainHostFragment::class.java.simpleName)
         if (hostFragment.isFragmentAddedAndVisible() && hostFragment is FragmentNavigator) {
             hostFragment.onBackPressed()
@@ -58,7 +56,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNavController() {
-        Log.d("MainActivity", "setNavController: ");
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         val myNavHostFragment: NavHostFragment = nav_host_fragment as NavHostFragment
         val inflater = myNavHostFragment.navController.navInflater

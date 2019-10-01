@@ -2,48 +2,57 @@ package kz.myfood.ui.home
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
 import kz.myfood.R
-import kz.myfood.ui.login.AuthViewModel
-import org.koin.android.ext.android.inject
+import kz.myfood.ui.home.todolist_types.ActiveToDoFragment
+import kz.myfood.ui.home.todolist_types.BasePagerAdapter
+import kz.myfood.ui.home.todolist_types.HistoryToDoFragment
 
 /**
- * A simple [Fragment] subclass.
+ * 1.10.19 done by Zhanel
  */
 class HomeFragment : Fragment() {
 
-    private lateinit var btnLogout: Button
-    private val viewModel: AuthViewModel by inject()
+    private lateinit var viewPager: ViewPager
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("HomeFragment", "onViewCreated: ");
         bindViews(view)
+        setAdapter()
         setData()
     }
 
     private fun bindViews(view: View) {
-        btnLogout = view.findViewById(R.id.btnLogout)
+        viewPager = view.findViewById(R.id.viewPager)
+        tabLayout = view.findViewById(R.id.tabLayout)
+    }
 
-        btnLogout.setOnClickListener {
-            viewModel.unregisterUser()
-            activity?.finish()
-            findNavController().navigate(R.id.logout)
-        }
+    private fun setAdapter() {
+        val fragments = arrayListOf<Fragment>(
+            ActiveToDoFragment(),
+            HistoryToDoFragment()
+        )
+        val titles = arrayListOf(
+            "Active",
+            "History"
+        )
+        val adapter = BasePagerAdapter(childFragmentManager, fragments, titles)
+        viewPager.adapter = adapter
+        viewPager.offscreenPageLimit = 2
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     private fun setData() {

@@ -12,16 +12,13 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/logout"
-            app:destination="@id/mainActivity"
-            app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true"/>
+            android:id="@+id/goToHistoryDetails"
+            app:destination="@+id/fragmentHistoryDetails"/>
     </fragment>
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="kz.myfood.ui.MainActivity"
-        android:label="activity_second"
-        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/fragmentHistoryDetails"
+        android:name="kz.myfood.ui.home.todolist_types.HistoryDetails">
+    </fragment>
 
 </navigation>

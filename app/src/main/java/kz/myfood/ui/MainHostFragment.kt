@@ -24,8 +24,7 @@ import java.util.*
 class MainHostFragment : Fragment(),
     ViewPager.OnPageChangeListener,
     BottomNavigationView.OnNavigationItemReselectedListener,
-    BottomNavigationView.OnNavigationItemSelectedListener,
-    FragmentNavigator {
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     // overall back stack of containers
     private val backStack = Stack<Int>()
@@ -45,7 +44,6 @@ class MainHostFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_main_host, container, false)
-        Log.d("MainHostFragment", "onCreateView: ");
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,34 +100,6 @@ class MainHostFragment : Fragment(),
             if (hasDeepLink) setItem(index)
         }
     }
-
-    override fun onBackPressed() {
-        Log.d("MainHostFragment", "onBackPressed: ")
-        activity?.finish()
-//        for (fragment in childFragmentManager.fragments) {
-//            if (childFragmentManager.backStackEntryCount > 0) {
-//                childFragmentManager.popBackStack()
-//            }else {
-//                activity?.finish()
-//            }
-//        }
-    }
-
-//    override fun onBackPressed() {
-////        Log.d("MainHostFragment", "onBackPressed: ")
-//        val fragment = fragments[mainPager.currentItem]
-//        val hadNestedFragments = fragment.onBackPressed()
-//        // if no fragments were popped
-//        if (!hadNestedFragments) {
-//            if (backStack.size > 1) {
-//                // remove current position from stack
-//                backStack.pop()
-//                // set the next item in stack as current
-//                mainPager.currentItem = backStack.peek()
-//
-//            } else activity?.finish()
-//        }
-//    }
 
     inner class ViewPagerAdapter : FragmentPagerAdapter(activity?.supportFragmentManager!!) {
 
