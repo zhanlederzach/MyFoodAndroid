@@ -1,23 +1,21 @@
 package kz.myfood.ui
 
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation.findNavController
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_main_host.*
 
 import kz.myfood.R
 import kz.myfood.utils.FragmentNavigator
-import kz.myfood.utils.views.BaseFragment
+import kz.myfood.utils.base.BaseFragment
 import java.util.*
 
 /**
@@ -47,6 +45,7 @@ class MainHostFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_main_host, container, false)
+        Log.d("MainHostFragment", "onCreateView: ");
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,21 +81,6 @@ class MainHostFragment : Fragment(),
         fragment.popToRoot()
     }
 
-    override fun onBackPressed() {
-        val fragment = fragments[mainPager.currentItem]
-        val hadNestedFragments = fragment.onBackPressed()
-        // if no fragments were popped
-        if (!hadNestedFragments) {
-            if (backStack.size > 1) {
-                // remove current position from stack
-                backStack.pop()
-                // set the next item in stack as current
-                mainPager.currentItem = backStack.peek()
-
-            } else activity?.finish()
-        }
-    }
-
     /// OnPageSelected Listener Implementation
     override fun onPageScrollStateChanged(state: Int) {}
 
@@ -118,6 +102,34 @@ class MainHostFragment : Fragment(),
             if (hasDeepLink) setItem(index)
         }
     }
+
+    override fun onBackPressed() {
+        Log.d("MainHostFragment", "onBackPressed: ")
+        activity?.finish()
+//        for (fragment in childFragmentManager.fragments) {
+//            if (childFragmentManager.backStackEntryCount > 0) {
+//                childFragmentManager.popBackStack()
+//            }else {
+//                activity?.finish()
+//            }
+//        }
+    }
+
+//    override fun onBackPressed() {
+////        Log.d("MainHostFragment", "onBackPressed: ")
+//        val fragment = fragments[mainPager.currentItem]
+//        val hadNestedFragments = fragment.onBackPressed()
+//        // if no fragments were popped
+//        if (!hadNestedFragments) {
+//            if (backStack.size > 1) {
+//                // remove current position from stack
+//                backStack.pop()
+//                // set the next item in stack as current
+//                mainPager.currentItem = backStack.peek()
+//
+//            } else activity?.finish()
+//        }
+//    }
 
     inner class ViewPagerAdapter : FragmentPagerAdapter(activity?.supportFragmentManager!!) {
 

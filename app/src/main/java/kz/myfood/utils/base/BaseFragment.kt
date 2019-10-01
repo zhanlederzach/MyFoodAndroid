@@ -1,4 +1,4 @@
-package kz.myfood.utils.views
+package kz.myfood.utils.base
 
 import android.content.Intent
 import android.os.Bundle

@@ -9,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kz.myfood.repositories.ILocalRepository
 import kz.myfood.repositories.LocalStorageImpl
+import kz.myfood.ui.login.AuthViewModel
 import kz.myfood.ui.profile.ProfileViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -21,8 +22,8 @@ val networkModule = module {
 }
 
 val viewModelModule = module (override = true) {
-    viewModel { ProfileViewModel()
-    }
+    viewModel { ProfileViewModel() }
+    viewModel { AuthViewModel(get()) }
 }
 
 fun <T> applySchedulersSingle(): SingleTransformer<T, T> {

@@ -8,20 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_login_validation.*
-
 import kz.myfood.R
-import kz.myfood.repositories.LocalStorageImpl
+import org.koin.android.ext.android.inject
 
 /**
  * A simple [Fragment] subclass.
  */
 class LoginValidationFragment : Fragment() {
 
+    private val viewModel: AuthViewModel by inject()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login_validation, container, false)
     }
 
@@ -32,7 +32,7 @@ class LoginValidationFragment : Fragment() {
 
     private fun setData() {
         btnDone.setOnClickListener {
-//            findNavController().navigate(R.id.main_host_fragment)
+            viewModel.registerUser()
             findNavController().navigate(R.id.action_go_to_home_fragment)
         }
     }

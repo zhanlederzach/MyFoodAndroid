@@ -8,7 +8,6 @@ import java.io.InputStreamReader
 
 interface ILocalRepository {
     var isRegistered: Boolean
-//    var isFirstLaunch: Boolean
 }
 
 class LocalStorageImpl(
@@ -19,7 +18,7 @@ class LocalStorageImpl(
         const val IS_REGISTERED = "is_registered"
     }
 
-    open override var isRegistered: Boolean
+    override var isRegistered: Boolean
         get() = sharedPreference.getBoolean(IS_REGISTERED, false)
         set(value) {
             sharedPreference.edit().putBoolean(IS_REGISTERED, value).apply()

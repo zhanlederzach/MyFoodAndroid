@@ -8,7 +8,7 @@
     tools:context=".ui.MainActivity">
 
 
-    <kz.myfood.utils.views.NonSwipingViewPager
+    <kz.myfood.utils.NonSwipingViewPager
         android:id="@+id/mainPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

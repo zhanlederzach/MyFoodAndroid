@@ -1,4 +1,4 @@
-package kz.myfood.utils.views
+package kz.myfood.utils.base
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent

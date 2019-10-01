@@ -1,12 +1,11 @@
 package kz.myfood.ui.profile
 
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Flowable
 import io.reactivex.Single
 import kz.myfood.di.applySchedulersSingle
 import kz.myfood.model.ProfileInfo
 import kz.myfood.model.StatisticsInfo
-import kz.myfood.utils.views.BaseViewModel
+import kz.myfood.utils.base.BaseViewModel
 
 class ProfileViewModel: BaseViewModel() {
 

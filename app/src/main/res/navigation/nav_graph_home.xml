@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_home"
@@ -9,6 +10,18 @@
         android:id="@+id/home_dest"
         android:name="kz.myfood.ui.home.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/logout"
+            app:destination="@id/mainActivity"
+            app:popUpTo="@id/nav_home"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="kz.myfood.ui.MainActivity"
+        android:label="activity_second"
+        tools:layout="@layout/activity_main" />
 
 </navigation>
